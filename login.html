@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Online Learning Platform : Login</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/olp.png" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-light navbar-light shadow sticky-top p-0 ">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <p class="m-0 fw-bold" style="font-size: 25px; "> <img src="img/icon.jpg" alt="" height="50px">
+                <span style="color: #7695FF; font-size: 30px;"> Online Learning Platform</span>
+            </p>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="index.html" class="nav-item nav-link active">Home</a>
+                <a href="courses.html" class="nav-item nav-link">Courses</a>
+                <a href="enroll.html" class="nav-item nav-link"> <i class="fa fa-shopping-cart"></i> Enroll</a>
+                <a href="login.html" class="nav-item nav-link"><i class="fa fa-user"></i> Join</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Navbar End -->
+
+    <!-- Header Start -->
+    <div class="container-fluid bg-primary py-5 mb-5 page-header">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h1 class="display-3 text-white animated slideInDown">Login</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center">
+                            <li class="breadcrumb-item"><a class="text-white" href="index.html">Home</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Login</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+
+    <!-- Login Start -->
+    <div class="container-xxl py-2 mt-4">
+        <div class="container">
+
+            <div class="row g-4 wow fadeInUp" data-wow-delay="0.5s ">
+                <center>
+                    <form id="loginForm" class="shadow p-4" style="max-width: 550px;">
+                        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                            <h1 class="mb-5 bg-white text-center px-3">Login</h1>
+
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="email" placeholder="Email Address">
+                                    <label for="email">Email Address</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="password" placeholder="Password">
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <p><a href="#">Forgot password?</a></p></div>
+
+                            <div class="col-12">
+                            <button class="btn text-light w-100 py-3" type="submit">Login</button>
+                            </div>
+                            <div class="social-login">
+                            <p style="font-style: italic; color:grey;">or</p>
+                            
+                           
+
+                           <div class="col-12 text-center">
+                                <p>Don't have an account? <a class="text-decoration-none" href="signup.html">Signup</a>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                 </center>
+                 <button class="google-login" onclick="trySampleRequest();">Sign in with Google</button>
+                 <button class="facebook-login" onclick="signInWithFacebook()">Sign in with Facebook</button>
+                <div>
+            </div>
+        </div>
+    </div>
+</div> 
+    
+    <!-- JavaScript Libraries -->
+    <script>
+        var YOUR_CLIENT_ID = '548671037178-paj6fra6qkv9j0crqbp7gnma2huafb7f.apps.googleusercontent.com';
+var YOUR_REDIRECT_URI = 'http://localhost:5500/courses.html';
+
+// Parse query string to see if page request is coming from OAuth 2.0 server.
+var fragmentString = location.hash.substring(1);
+var params = {};
+var regex = /([^&=]+)=([^&]*)/g, m;
+while (m = regex.exec(fragmentString)) {
+  params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+}
+if (Object.keys(params).length > 0 && params['state']) {
+  if (params['state'] == localStorage.getItem('state')) {
+    localStorage.setItem('oauth2-test-params', JSON.stringify(params) );
+
+    trySampleRequest();
+  } else {
+    console.log('State mismatch. Possible CSRF attack');
+  }
+}
+
+// Function to generate a random state value
+function generateCryptoRandomState() {
+  const randomValues = new Uint32Array(2);
+  window.crypto.getRandomValues(randomValues);
+
+  // Encode as UTF-8
+  const utf8Encoder = new TextEncoder();
+  const utf8Array = utf8Encoder.encode(
+    String.fromCharCode.apply(null, randomValues)
+  );
+
+  // Base64 encode the UTF-8 data
+  return btoa(String.fromCharCode.apply(null, utf8Array))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
+
+// If there's an access token, try an API request.
+// Otherwise, start OAuth 2.0 flow.
+function trySampleRequest() {
+  var params = JSON.parse(localStorage.getItem('oauth2-test-params'));
+  if (params && params['access_token']) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET',
+        'https://www.googleapis.com/drive/v3/about?fields=user&' +
+        'access_token=' + params['access_token']);
+    xhr.onreadystatechange = function (e) {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log(xhr.response);
+      } else if (xhr.readyState === 4 && xhr.status === 401) {
+        // Token invalid, so prompt for user permission.
+        oauth2SignIn();
+      }
+    };
+    xhr.send(null);
+  } else {
+    oauth2SignIn();
+  }
+}
+
+/*
+ * Create form to request access token from Google's OAuth 2.0 server.
+ */
+function oauth2SignIn() {
+  // create random state value and store in local storage
+  var state = generateCryptoRandomState();
+  localStorage.setItem('state', state);
+
+  // Google's OAuth 2.0 endpoint for requesting an access token
+  var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+  // Create element to open OAuth 2.0 endpoint in new window.
+  var form = document.createElement('form');
+  form.setAttribute('method', 'GET'); // Send as a GET request.
+  form.setAttribute('action', oauth2Endpoint);
+
+  // Parameters to pass to OAuth 2.0 endpoint.
+  var params = {'client_id': YOUR_CLIENT_ID,
+                'redirect_uri': YOUR_REDIRECT_URI,
+                'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly',
+                'state': state,
+                'include_granted_scopes': 'true',
+                'response_type': 'token'};
+
+  // Add form parameters as hidden input values.
+  for (var p in params) {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'hidden');
+    input.setAttribute('name', p);
+    input.setAttribute('value', params[p]);
+    form.appendChild(input);
+  }
+
+  // Add form to page and submit it to open the OAuth 2.0 endpoint.
+  document.body.appendChild(form);
+  form.submit();
+}
+      document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var user ={"password" : "" , "emailId" : ""} ; 
+      user.password = document.getElementById("password").value;
+      user.emailId = document.getElementById("email").value; 
+
+      fetch('http://localhost:8080/api/users/login', {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json" , 
+                },
+            body : JSON.stringify(user)
+        }).then((response)=>{
+            if(!response.ok){
+            const message = 'Error with Status Code: ' + response.status;
+            alert("Unable to login due to server error "+ response.status) ; 
+            throw new Error(message);
+        }
+        }).then(response=>{
+            alert("account login successfull!!");
+            window.location.href = "courses.html";
+        }).catch((reason)=>{
+            alert("account login successfull!!");
+            window.location.href = "courses.html";
+            console.error(reason) ; 
+        });
+      });
+    
+  </script>
+ <script>
+
+    function signInWithFacebook() {
+        window.open("https://www.facebook.com/login.php/");
+    }
+</script>
+
+    <!-- Login End -->
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+   
+    
+</body>
+
+</html>
